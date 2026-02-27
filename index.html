@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuestra Boda | Alejandro & Valeria</title>
+    
+    <!-- FAVICON (Flor de Hibisco) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌺</text></svg>">
+
+    <!-- Fuentes Google -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
+    
+    <!-- Iconos FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- LIBRERIA LENIS PARA SCROLL LENTO Y SUAVE -->
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.34/dist/lenis.min.js"></script>
+
+    <style>
+        /* PALETA DE COLORES TROPICAL LUXURY */
+        :root {
+            --verde-palmera: #2A5934;   /* Verde esmeralda profundo */
+            --coral-hibisco: #E06A57;   /* Rosa coral vibrante */
+            --arena-clara: #F9F6F0;     /* Fondo color arena */
+            --dorado-sol: #D4AF37;      /* Dorado cálido */
+            --blanco: #ffffff;
+            --texto: #3E4A41;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: #e8ece9; font-family: 'Montserrat', sans-serif; overflow-x: hidden; color: var(--texto); }
+
+        /* CONTENEDOR TIPO CELULAR */
+        .app-container {
+            max-width: 480px; margin: 0 auto; background-color: var(--arena-clara);
+            min-height: 100vh; position: relative; box-shadow: 0 0 30px rgba(0,0,0,0.15); overflow: hidden;
+        }
+
+        /* ANIMACIÓN SUTIL: PÉTALOS Y HOJAS TROPICALES CAYENDO */
+        .hojas-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden; }
+        
+        /* Hojas verdes */
+        .hoja-cae { position: absolute; width: 16px; height: 16px; background-color: var(--verde-palmera); opacity: 0.12; border-radius: 0 50% 0 50%; animation: caer linear infinite; }
+        
+        /* Pétalos coral */
+        .hoja-cae.petalo { background-color: var(--coral-hibisco); width: 14px; height: 18px; border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; opacity: 0.25; }
+        
+        @keyframes caer { 0% { transform: translateY(-5vh) translateX(0) rotate(0deg); } 50% { transform: translateY(50vh) translateX(25px) rotate(180deg); } 100% { transform: translateY(110vh) translateX(-15px) rotate(360deg); } }
+        
+        .h1 { left: 10%; animation-duration: 18s; animation-delay: 0s; }
+        .h2 { left: 25%; animation-duration: 22s; animation-delay: -5s; }
+        .h3 { left: 45%; animation-duration: 16s; animation-delay: -2s; }
+        .h4 { left: 65%; animation-duration: 20s; animation-delay: -8s; }
+        .h5 { left: 85%; animation-duration: 19s; animation-delay: -3s; }
+        .h6 { left: 15%; animation-duration: 24s; animation-delay: -10s; }
+        .h7 { left: 75%; animation-duration: 21s; animation-delay: -7s; }
+
+        /* TIPOGRAFÍA LUXURY */
+        h1, h2, h3 { font-family: 'Cormorant Garamond', serif; color: var(--verde-palmera); }
+        .cursiva { font-family: 'Great Vibes', cursive; font-size: 4rem; color: var(--verde-palmera); margin: 10px 0; line-height: 1.2; letter-spacing: 2px;}
+        .subtitulo { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 4px; color: var(--coral-hibisco); margin-bottom: 5px; font-weight: 600;}
+
+        /* ADORNO TROPICAL */
+        .adorno-tropical { position: absolute; width: 86%; left: 7%; height: 60px; z-index: 1; pointer-events: none; }
+        .adorno-top { top: 20px; }
+        .adorno-bottom { bottom: 20px; transform: scaleY(-1); }
+        .tarjeta .adorno-top { top: 20px; }
+        .tarjeta .adorno-bottom { bottom: 20px; }
+
+        /* PANTALLA 1: EL SOBRE INICIAL */
+        #pantalla-sobre {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: var(--arena-clara); z-index: 100;
+            display: flex; flex-direction: column; align-items: center; justify-content: flex-start; 
+            transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1);
+            text-align: center; padding: 20px; overflow-y: auto; overflow-x: hidden;
+        }
+        
+        /* EL SOBRE CON EFECTO 3D */
+        .sobre-icono {
+            background-color: var(--verde-palmera); width: 88%; max-width: 380px; aspect-ratio: 1.45 / 1; height: auto; 
+            border-radius: 8px; position: relative; margin: 25px 0 15px 0; cursor: pointer;
+            box-shadow: 0 15px 35px rgba(42, 89, 52, 0.4); display: flex; align-items: center; justify-content: center; z-index: 2;
+            perspective: 1000px;
+        }
+        .sobre-tapa { 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(255,255,255,0.15); 
+            clip-path: polygon(0 0, 100% 0, 50% 55%); border-radius: 8px; z-index: 4; 
+            transform-origin: top; 
+            transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1); 
+        }
+        .sobre-base { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.1); clip-path: polygon(0 0, 50% 50%, 100% 0, 100% 100%, 0 100%); border-radius: 8px; z-index: 1; }
+        
+        .sobre-sello {
+            position: absolute; top: 55%; left: 50%; transform: translate(-50%, -50%);
+            width: 58px; height: 58px; background: radial-gradient(circle, var(--coral-hibisco) 0%, #B84D3D 100%);
+            border-radius: 50%; z-index: 5; box-shadow: 0 4px 10px rgba(0,0,0,0.3), inset 0 2px 4px rgba(255,255,255,0.3);
+            display: flex; align-items: center; justify-content: center; color: white; 
+            font-family: 'Great Vibes', cursive; font-size: 1.5rem; text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+            letter-spacing: 0;
+            transition: all 0.4s ease-in;
+        }
+
+        /* ANIMACIÓN DE ABRIR */
+        .sobre-icono.abriendo .sobre-tapa { transform: rotateX(180deg); }
+        .sobre-icono.abriendo .sobre-sello { opacity: 0; transform: translate(-50%, -50%) scale(1.5); }
+
+        .sobre-flecha { color: var(--verde-palmera); font-size: 2rem; animation: bounce 1.5s infinite; z-index: 2; }
+        @keyframes bounce { 0%, 100% { transform: translateY(-5px); } 50% { transform: translateY(5px); } }
+        .sobre-abierto { transform: translateY(-100vh) !important; }
+
+        /* SECCIONES Y TARJETAS */
+        section { padding: 40px 20px; text-align: center; position: relative; z-index: 2; }
+        .tarjeta { background: var(--blanco); border-radius: 12px; padding: 70px 20px; box-shadow: 0 8px 30px rgba(42, 89, 52, 0.08); margin-bottom: 25px; position: relative; overflow: visible; border: 1px solid rgba(42, 89, 52, 0.15); }
+
+        /* FOTOS */
+        .foto-arco { width: 100%; height: 420px; object-fit: cover; clip-path: path("M 0,200 C 0,50 300,50 300,200 L 300,420 L 0,420 Z"); margin: 30px 0; position: relative; z-index: 2; border-radius: 10px;}
+        .foto-normal { width: 100%; border-radius: 12px; margin: 20px 0; box-shadow: 0 5px 20px rgba(0,0,0,0.15);}
+
+        /* FECHA ESPECIAL */
+        .fecha-grid { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 15px; margin: 20px 0; font-family: 'Cormorant Garamond', serif; color: var(--verde-palmera); }
+        .fecha-dia { font-size: 4.5rem; line-height: 1; border-left: 1px solid var(--coral-hibisco); border-right: 1px solid var(--coral-hibisco); padding: 0 20px; }
+
+        /* REPRODUCTOR Y BOTONES */
+        .reproductor, .boton { background: var(--verde-palmera); color: white; padding: 12px 25px; border-radius: 30px; text-transform: uppercase; font-size: 0.8rem; border: none; margin-top: 15px; z-index: 2; position: relative; letter-spacing: 1px; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; cursor: pointer; justify-content: center; transition: background 0.3s;}
+        .boton:hover { background: var(--coral-hibisco); }
+
+        /* ITINERARIO ZIG-ZAG */
+        .timeline { position: relative; margin: 40px auto; width: 100%; max-width: 400px; padding: 20px 0; }
+        .timeline::after { content: ''; position: absolute; width: 1.5px; background: var(--dorado-sol); top: 0; bottom: 0; left: 50%; margin-left: -0.75px; }
+        .tl-item { position: relative; width: 50%; padding-bottom: 35px; }
+        .tl-item::before { content: ''; position: absolute; top: 0; width: 12px; height: 12px; background: var(--arena-clara); border: 2px solid var(--coral-hibisco); border-radius: 50%; z-index: 1; }
+        .tl-item:nth-child(odd) { left: 0; padding-right: 25px; text-align: right; }
+        .tl-item:nth-child(odd)::before { right: -6px; }
+        .tl-item:nth-child(even) { left: 50%; padding-left: 25px; text-align: left; }
+        .tl-item:nth-child(even)::before { left: -6px; }
+        .tl-hora { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: var(--verde-palmera); font-weight: bold; margin-bottom: 5px;}
+
+        /* CONTADOR */
+        .contador-grid { display: flex; gap: 10px; justify-content: center; margin-top: 15px; z-index: 2; position: relative;}
+        .caja-tiempo { background: var(--arena-clara); padding: 12px 10px; border-radius: 8px; width: 70px; border: 1px solid rgba(42, 89, 52, 0.2); }
+        .caja-tiempo span { font-size: 1.8rem; font-family: 'Cormorant Garamond'; color: var(--verde-palmera); display: block;}
+        .caja-tiempo p { font-size: 0.6rem; text-transform: uppercase; margin: 0; color: #777; letter-spacing: 1px;}
+
+        /* ICONOS Y MISCELÁNEOS */
+        .icono-grande { font-size: 2.5rem; color: var(--coral-hibisco); margin-bottom: 15px; z-index: 2; position: relative;}
+        .icono-svg { width: 50px; height: 50px; margin-bottom: 15px; z-index: 2; position: relative; display: inline-block; }
+        .linea { width: 60px; height: 1.5px; background: var(--dorado-sol); margin: 20px auto; position: relative; z-index: 2; }
+        .iniciales { font-family: 'Cormorant Garamond'; font-size: 2.2rem; color: var(--verde-palmera); display: flex; align-items: center; justify-content: center; gap: 15px; margin: 20px 0;}
+        .iniciales span { font-size: 1.5rem; color: var(--coral-hibisco); }
+
+        /* ICONOS LUXURY TROPICAL (DRESS CODE) */
+        .icono-ropa { width: 70px; height: 70px; display: inline-block; margin: 0 15px; }
+
+        .animar { 
+            opacity: 0; 
+            transform: translateY(60px); 
+            transition: opacity 1.2s cubic-bezier(0.22, 1, 0.36, 1), transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+            transition-delay: 0.2s; 
+        }
+        .animar.visible { 
+            opacity: 1; 
+            transform: translateY(0); 
+        }
+
+        /* =========================================
+                EFECTO FINAL: EL RÍO DE HOJAS
+        ========================================= */
+        .rio-contenedor {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 180px; /* Altura del río en la parte inferior */
+            background: linear-gradient(to top, rgba(165, 203, 195, 0.4) 0%, rgba(165, 203, 195, 0) 100%); /* Color agua sutil */
+            overflow: hidden;
+            z-index: 1;
+            mask-image: linear-gradient(to top, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%);
+            -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%);
+        }
+
+        /* La hoja que ya está en el agua flotando suavemente */
+        .hoja-flotando {
+            position: absolute;
+            bottom: 20px;
+            animation: flotar-rio 4s ease-in-out infinite alternate;
+        }
+        
+        .hf-1 { left: 15%; animation-delay: 0s; bottom: 30px; transform: scale(1.2) rotate(15deg); }
+        .hf-2 { left: 40%; animation-delay: -1.5s; bottom: 15px; transform: scale(0.9) rotate(-25deg); }
+        .hf-3 { left: 70%; animation-delay: -3s; bottom: 40px; transform: scale(1.1) rotate(45deg); }
+        .hf-4 { left: 85%; animation-delay: -0.5s; bottom: 20px; transform: scale(0.8) rotate(-10deg); }
+        .hf-5 { left: 25%; animation-delay: -2s; bottom: 10px; transform: scale(1) rotate(70deg); }
+
+        /* Movimiento de vaivén de izquierda a derecha y un poco arriba/abajo (Corriente) */
+        @keyframes flotar-rio {
+            0% { transform: translate(0, 0) rotate(10deg); }
+            50% { transform: translate(15px, -5px) rotate(25deg); }
+            100% { transform: translate(30px, 0) rotate(15deg); }
+        }
+        
+        /* Modificamos la foto final para que el río quede debajo y no la tape */
+        .foto-final { position: relative; z-index: 5; margin-bottom: 80px;}
+
+    </style>
+</head>
+<body>
+
+    <!-- EMBLEMAS TROPICALES VECTORIALES -->
+    <svg style="display:none;">
+        
+        <!-- ADORNO HOJAS TROPICALES -->
+        <symbol id="ornamento-tropical" viewBox="0 0 400 80" preserveAspectRatio="xMidYMid meet">
+            <!-- Lineas base -->
+            <line x1="20" y1="40" x2="160" y2="40" stroke="var(--dorado-sol)" stroke-width="1"/>
+            <line x1="240" y1="40" x2="380" y2="40" stroke="var(--dorado-sol)" stroke-width="1"/>
+            
+            <!-- Hojas izquierda -->
+            <path d="M 160,40 C 140,20 120,25 100,40 C 120,55 140,50 160,40" fill="var(--verde-palmera)" opacity="0.8"/>
+            <path d="M 140,40 C 120,10 90,15 70,40 C 90,65 120,60 140,40" fill="var(--verde-palmera)" opacity="0.6"/>
+            
+            <!-- Hojas derecha -->
+            <path d="M 240,40 C 260,20 280,25 300,40 C 280,55 260,50 240,40" fill="var(--verde-palmera)" opacity="0.8"/>
+            <path d="M 260,40 C 280,10 310,15 330,40 C 310,65 280,60 260,40" fill="var(--verde-palmera)" opacity="0.6"/>
+            
+            <!-- Flor central estilo Hibisco -->
+            <path d="M 200,40 C 185,25 195,15 200,30 C 205,15 215,25 200,40" fill="var(--coral-hibisco)"/>
+            <path d="M 200,40 C 180,45 185,60 200,50 C 215,60 220,45 200,40" fill="var(--coral-hibisco)"/>
+            <path d="M 200,40 C 175,35 180,55 200,45 C 220,55 225,35 200,40" fill="var(--coral-hibisco)"/>
+            <circle cx="200" cy="40" r="4" fill="var(--dorado-sol)"/>
+        </symbol>
+
+        <!-- ICONO GUAYABERA / LINO -->
+        <symbol id="icono-guayabera" viewBox="0 0 100 100">
+            <!-- Cuello -->
+            <path d="M35,25 L50,40 L65,25 L58,15 L42,15 Z" fill="none" stroke="var(--verde-palmera)" stroke-width="2.5" stroke-linejoin="round"/>
+            <path d="M42,15 L50,25 L58,15" fill="none" stroke="var(--verde-palmera)" stroke-width="2.5"/>
+            <!-- Cuerpo -->
+            <path d="M35,35 L20,45 L25,60 L35,55 L35,90 L65,90 L65,55 L75,60 L80,45 L65,35 Z" fill="none" stroke="var(--verde-palmera)" stroke-width="3" stroke-linejoin="round"/>
+            <!-- Botones y pliegues (detalle guayabera) -->
+            <line x1="50" y1="40" x2="50" y2="90" stroke="var(--verde-palmera)" stroke-width="2"/>
+            <line x1="42" y1="45" x2="42" y2="90" stroke="var(--verde-palmera)" stroke-width="1" stroke-dasharray="2 2"/>
+            <line x1="58" y1="45" x2="58" y2="90" stroke="var(--verde-palmera)" stroke-width="1" stroke-dasharray="2 2"/>
+            <circle cx="50" cy="50" r="1.5" fill="var(--coral-hibisco)"/>
+            <circle cx="50" cy="65" r="1.5" fill="var(--coral-hibisco)"/>
+            <circle cx="50" cy="80" r="1.5" fill="var(--coral-hibisco)"/>
+        </symbol>
+
+        <!-- ICONO VESTIDO PLAYERO VAPOROSO -->
+        <symbol id="icono-vestido-playa" viewBox="0 0 100 100">
+            <!-- Top Halter -->
+            <path d="M45,15 C45,10 55,10 55,15 L60,40 L40,40 Z" fill="none" stroke="var(--verde-palmera)" stroke-width="2.5" stroke-linejoin="round"/>
+            <!-- Falda vaporosa -->
+            <path d="M38,40 C20,60 15,85 25,95 C40,90 60,90 75,95 C85,85 80,60 62,40 Z" fill="none" stroke="var(--verde-palmera)" stroke-width="3" stroke-linejoin="round"/>
+            <!-- Cinta/cinturón coral -->
+            <path d="M38,40 L62,40 L60,45 L40,45 Z" fill="var(--coral-hibisco)"/>
+            <!-- Pliegues falda -->
+            <path d="M45,45 Q40,70 35,90 M55,45 Q60,70 65,90" fill="none" stroke="var(--verde-palmera)" stroke-width="1.5" stroke-dasharray="3 3"/>
+        </symbol>
+
+        <symbol id="icono-argollas" viewBox="0 0 100 100">
+            <circle cx="40" cy="50" r="22" fill="none" stroke="var(--verde-palmera)" stroke-width="4"/>
+            <circle cx="60" cy="50" r="22" fill="none" stroke="var(--dorado-sol)" stroke-width="4"/>
+            <path d="M49,32 C54,34 58,39 60,45" fill="none" stroke="var(--verde-palmera)" stroke-width="5" stroke-linecap="round"/>
+            <path d="M40,55 C42,61 46,66 51,68" fill="none" stroke="var(--verde-palmera)" stroke-width="5" stroke-linecap="round"/>
+            <path d="M35,27 L40,22 L45,27 L40,32 Z" fill="var(--coral-hibisco)"/>
+            <path d="M37,27 L43,27 L40,30 Z" fill="white"/>
+        </symbol>
+    </svg>
+
+    <audio id="musica-boda" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="app-container">
+
+        <!-- ANIMACIÓN TROPICAL (Hojas y pétalos) -->
+        <div class="hojas-container">
+            <div class="hoja-cae h1"></div>
+            <div class="hoja-cae petalo h2"></div>
+            <div class="hoja-cae h3"></div>
+            <div class="hoja-cae petalo h4"></div>
+            <div class="hoja-cae h5"></div>
+            <div class="hoja-cae h6"></div>
+            <div class="hoja-cae petalo h7"></div>
+        </div>
+        
+        <!-- PANTALLA 1: SOBRE DE INICIO -->
+        <div id="pantalla-sobre">
+            <svg class="adorno-tropical adorno-top" style="top: 15px;"><use href="#ornamento-tropical"></use></svg>
+            
+            <svg class="adorno-tropical adorno-bottom" style="top: 65px; position: relative; margin-bottom: -40px;"><use href="#ornamento-tropical"></use></svg>
+
+            <p class="subtitulo" style="position: relative; z-index: 2; margin-top: 100px;">Nuestra Boda</p>
+            <h1 class="cursiva" style="position: relative; z-index: 2; margin-top: 20px; font-size: 4.5rem;">Alejandro<br><span style="font-size: 2.5rem; color: var(--coral-hibisco);">&</span><br>Valeria</h1>
+            
+            <p style="font-size: 1.1rem; font-family: 'Cormorant Garamond'; margin-top: 20px;">Invitación para:</p>
+            <h2 id="nombre-invitado" style="font-size: 1.8rem; margin-bottom: 5px; color: var(--texto);">Nuestros Invitados</h2>
+            
+            <p style="margin-bottom: 10px; font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; letter-spacing: 3px; font-weight: 600; color: var(--verde-palmera);">24 . 01 . 2026</p>
+
+            <div class="sobre-icono" id="btn-abrir">
+                <div class="sobre-base"></div>
+                <div class="sobre-tapa"></div>
+                <div class="sobre-sello">A&V</div>
+            </div>
+            
+            <div id="btn-flecha" style="cursor: pointer; z-index: 2; position: relative; margin-top: 5px;" onclick="abrirInvitacion()">
+                <i class="fa-solid fa-angle-up sobre-flecha"></i>
+                <p style="font-size: 0.8rem; color: var(--verde-palmera); text-transform: uppercase; margin-top:5px; letter-spacing: 2px;">Clic para abrir</p>
+            </div>
+            
+            <div style="margin-top: 25px; margin-bottom: 40px; border-top: 1.5px solid var(--dorado-sol); padding-top: 15px; width: 80%;">
+                <p style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px;">Hemos reservado</p>
+                <h1 id="numero-pases" style="font-size: 2.8rem; margin: 5px 0;">2</h1>
+                <p id="texto-pases" style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px;">Lugares en su honor</p>
+            </div>
+        </div>
+
+        <!-- CONTENIDO DE LA INVITACIÓN -->
+        <div id="contenido-invitacion" style="height: 100vh; overflow-y: auto; overflow-x: hidden; scroll-behavior: smooth; -webkit-overflow-scrolling: touch;">
+            
+            <!-- PORTADA -->
+            <section style="padding-top: 100px;">
+                <svg class="adorno-tropical adorno-top"><use href="#ornamento-tropical"></use></svg>
+                <p class="animar" style="font-size: 1.1rem; letter-spacing: 3px; color: var(--verde-palmera); font-weight: bold;">24 . 01 . 2026</p>
+                <div class="iniciales animar" style="margin-top: 40px;">A <span>|</span> V</div>
+                <h3 class="animar" style="font-size: 1.5rem; letter-spacing: 4px; margin-top: 20px;">NOS CASAMOS</h3>
+                <p class="animar" style="font-size: 1rem; font-style: italic; margin-top: 10px;">"El paraíso es estar juntos"</p>
+                
+                <!-- FOTO PAREJA PLAYA -->
+                <img src="https://images.unsplash.com/photo-1546525114-141203db0260?auto=format&fit=crop&w=600&q=80" alt="Novios Playa" class="foto-arco animar">
+            </section>
+
+            <!-- HISTORIA Y MÚSICA -->
+            <section style="padding-top: 0;">
+                <div class="tarjeta animar">
+                    <svg class="adorno-tropical adorno-top"><use href="#ornamento-tropical"></use></svg>
+                    <button class="reproductor" id="btn-musica"><i class="fa-solid fa-play" id="icono-musica"></i> Dale play a nuestra canción</button>
+                    <p style="margin-top: 35px; font-weight: bold; font-family: 'Cormorant Garamond'; font-size: 1.3rem; position: relative; z-index: 2; color: var(--verde-palmera);">Nuestra aventura continúa...</p>
+                    <p style="font-size: 0.95rem; line-height: 1.8; margin-top: 15px; position: relative; z-index: 2;">Frente al mar, con el amor que nos une y la bendición de Dios, uniremos nuestras vidas. Queremos que seas parte de este hermoso capítulo.</p>
+                </div>
+            </section>
+
+            <!-- FECHA Y CONTADOR -->
+            <section style="padding-top: 0;">
+                <div class="tarjeta animar">
+                    <p class="subtitulo">Enero</p>
+                    <div class="fecha-grid">
+                        <div style="text-align: right; border-top: 1px solid var(--dorado-sol); border-bottom: 1px solid var(--dorado-sol); padding: 10px 0;">Sábado</div>
+                        <div class="fecha-dia">24</div>
+                        <div style="text-align: left; border-top: 1px solid var(--dorado-sol); border-bottom: 1px solid var(--dorado-sol); padding: 10px 0;">2026</div>
+                    </div>
+                    <p style="margin-top: 30px; font-family: 'Cormorant Garamond'; font-size: 1.2rem; position: relative; z-index: 2; letter-spacing: 2px; text-transform: uppercase; color: var(--coral-hibisco);">Faltan:</p>
+                    <div class="contador-grid">
+                        <div class="caja-tiempo"><span id="dias">00</span><p>Días</p></div>
+                        <div class="caja-tiempo"><span id="horas">00</span><p>Hrs</p></div>
+                        <div class="caja-tiempo"><span id="minutos">00</span><p>Min</p></div>
+                        <div class="caja-tiempo"><span id="segundos">00</span><p>Seg</p></div>
+                    </div>
+                    <svg class="adorno-tropical adorno-bottom"><use href="#ornamento-tropical"></use></svg>
+                </div>
+            </section>
+
+            <section style="padding: 0 20px;">
+                <!-- FOTO DETALLE TROPICAL -->
+                <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=600&q=80" alt="Detalle Tropical" class="foto-normal animar">
+            </section>
+
+            <!-- UBICACIONES -->
+            <section>
+                <div class="tarjeta animar" style="padding: 40px 20px;">
+                    <svg class="icono-svg"><use href="#icono-argollas"></use></svg>
+                    
+                    <p style="font-weight: bold; font-family: 'Cormorant Garamond'; font-size: 1.3rem; position: relative; z-index: 2; letter-spacing: 1px;">16:00 HRS</p>
+                    <p class="subtitulo" style="margin-top: 15px; position: relative; z-index: 2;">CEREMONIA FRENTE AL MAR</p>
+                    <p style="position: relative; z-index: 2; font-size: 1.1rem; margin-top: 5px;">Playa Macarena</p>
+                    <p style="font-size: 0.85rem; color: #888; position: relative; z-index: 2;">Zona Hotelera</p>
+                    <a href="#" class="boton" style="background: transparent; color: var(--coral-hibisco); border: 1px solid var(--coral-hibisco);">Ver Ubicación</a>
+                </div>
+
+                <div class="tarjeta animar" style="padding: 40px 20px;">
+                    <i class="fa-solid fa-martini-glass-citrus icono-grande"></i>
+                    <p style="font-weight: bold; font-family: 'Cormorant Garamond'; font-size: 1.3rem; position: relative; z-index: 2; letter-spacing: 1px;">18:00 HRS</p>
+                    <p class="subtitulo" style="margin-top: 15px; position: relative; z-index: 2;">RECEPCIÓN TROPICAL</p>
+                    <p style="position: relative; z-index: 2; font-size: 1.1rem; margin-top: 5px;">Resort Urobo</p>
+                    <p style="font-size: 0.85rem; color: #888; position: relative; z-index: 2;">Terraza Principal</p>
+                    <a href="#" class="boton" style="background: transparent; color: var(--coral-hibisco); border: 1px solid var(--coral-hibisco);">Ver Ubicación</a>
+                </div>
+            </section>
+
+            <!-- ITINERARIO -->
+            <section style="padding-top: 0;">
+                <h2 class="animar" style="text-align: center; font-size: 1.8rem; letter-spacing: 1px;">Itinerario</h2>
+                <div class="linea animar"></div>
+                <div class="timeline animar">
+                    <div class="tl-item"><div class="tl-hora">16:00 Hrs</div><p style="font-size: 0.95rem;">Ceremonia de Arena</p></div>
+                    <div class="tl-item"><div class="tl-hora">17:00 Hrs</div><p style="font-size: 0.95rem;">Cóctel & Margaritas</p></div>
+                    <div class="tl-item"><div class="tl-hora">18:00 Hrs</div><p style="font-size: 0.95rem;">Ingreso de esposos</p></div>
+                    <div class="tl-item"><div class="tl-hora">18:30 Hrs</div><p style="font-size: 0.95rem;">Primer Baile</p></div>
+                    <div class="tl-item"><div class="tl-hora">19:30 Hrs</div><p style="font-size: 0.95rem;">Cena bajo las estrellas</p></div>
+                    <div class="tl-item"><div class="tl-hora">21:00 Hrs</div><p style="font-size: 0.95rem;">¡Fiesta Hawaiana!</p></div>
+                </div>
+            </section>
+
+            <section style="padding: 0 20px;">
+                <!-- FOTO VIBRAS TROPICALES -->
+                <img src="https://images.unsplash.com/photo-1596813362035-37cb2f43ce55?auto=format&fit=crop&w=600&q=80" alt="Vibras Tropicales" class="foto-normal animar">
+            </section>
+
+            <!-- DRESS CODE TROPICAL -->
+            <section>
+                <div class="tarjeta animar">
+                    <p class="subtitulo">Código de Vestimenta</p>
+                    <h3 style="font-size: 1.8rem; margin: 15px 0; letter-spacing: 2px;">Tropical Elegante</h3>
+                    
+                    <div style="margin: 30px 0; display: flex; justify-content: center; align-items: center;">
+                        <svg class="icono-ropa"><use href="#icono-guayabera"></use></svg>
+                        <svg class="icono-ropa"><use href="#icono-vestido-playa"></use></svg>
+                    </div>
+
+                    <p style="font-size: 0.9rem; line-height: 1.6;">Se sugiere el uso de guayaberas, prendas de lino y vestidos vaporosos. Con mucho cariño les pedimos evitar prendas en color blanco.</p>
+                </div>
+            </section>
+
+            <!-- REGLAS Y NOTAS -->
+            <section style="padding-top: 0;">
+                <div class="tarjeta animar" style="padding: 50px 20px 95px 20px;">
+                    <i class="fa-solid fa-moon icono-grande" style="font-size: 2rem; color: var(--dorado-sol);"></i>
+                    
+                    <h3 style="font-size: 1.6rem; margin-bottom: 10px; margin-top: 10px; position: relative; z-index: 2;">Sin Niños</h3>
+                    <p style="font-size: 0.9rem; line-height: 1.7; position: relative; z-index: 2;">Queremos que disfrutes de una noche relajada y llena de brisa marina. Por ello, nuestra boda será un evento solo para adultos.</p>
+                    
+                    <div class="linea" style="margin: 25px auto;"></div>
+                    
+                    <h3 style="font-size: 1.6rem; margin-bottom: 10px; position: relative; z-index: 2;">Nota Especial</h3>
+                    <p style="font-size: 0.9rem; line-height: 1.7; position: relative; z-index: 2;">Agradecemos tu puntualidad para que no te pierdas el hermoso atardecer con nosotros.</p>
+                    
+                    <svg class="adorno-tropical adorno-bottom"><use href="#ornamento-tropical"></use></svg>
+                </div>
+            </section>
+
+            <!-- REGALOS Y CONFIRMACIÓN -->
+            <section style="padding-top: 0;">
+                <div class="tarjeta animar">
+                    <svg class="adorno-tropical adorno-top"><use href="#ornamento-tropical"></use></svg>
+                    <i class="fa-solid fa-gift icono-grande" style="margin-top: 10px;"></i>
+                    <p class="subtitulo">Sugerencia de Regalos</p>
+                    <p style="font-size: 0.9rem; margin-top: 15px; position: relative; z-index: 2; line-height: 1.6;">El mejor regalo es que compartas este paraíso con nosotros, pero si deseas tener un detalle, les dejamos esta opción:</p>
+                    <p style="font-family: 'Cormorant Garamond'; font-size: 1.5rem; margin-top: 25px; font-weight: bold; color: var(--verde-palmera); position: relative; z-index: 2;">Lluvia de Sobres</p>
+                    <i class="fa-regular fa-envelope" style="font-size: 2.2rem; color: var(--dorado-sol); margin: 15px 0; position: relative; z-index: 2;"></i>
+                    <p style="font-size: 0.85rem; margin-top: 15px; font-weight: bold; position: relative; z-index: 2; letter-spacing: 2px;">TRANSFERENCIA</p>
+                    <p style="font-size: 0.9rem; position: relative; z-index: 2; margin-top: 5px;">Cuenta: XXXXXXXX</p>
+                </div>
+
+                <div class="tarjeta animar" style="padding: 70px 20px 95px 20px;">
+                    <i class="fa-regular fa-calendar-check icono-grande" style="position: relative; margin-top: 10px;"><i class="fa-solid fa-heart" style="position: absolute; font-size: 1.2rem; color: var(--coral-hibisco); bottom: 0; right: -5px;"></i></i>
+                    <h3 style="font-size: 1.7rem; position: relative; z-index: 2; margin-top: 10px;">Confirmar Asistencia</h3>
+                    <p style="font-size: 0.9rem; margin-top: 15px; position: relative; z-index: 2; line-height: 1.6;">Agradecemos que confirme su asistencia antes del 27 de diciembre.</p>
+                    <div style="display: flex; gap: 10px; margin-top: 25px; position: relative; z-index: 2;">
+                        <a href="https://wa.me/num" target="_blank" class="boton" style="font-size: 0.75rem; flex:1;"><i class="fa-brands fa-whatsapp"></i> Novia</a>
+                        <a href="https://wa.me/num" target="_blank" class="boton" style="font-size: 0.75rem; flex:1;"><i class="fa-brands fa-whatsapp"></i> Novio</a>
+                    </div>
+                    <svg class="adorno-tropical adorno-bottom"><use href="#ornamento-tropical"></use></svg>
+                </div>
+            </section>
+
+            <!-- CIERRE Y RÍO -->
+            <section style="padding-top: 0; padding-bottom: 0; position: relative; min-height: 500px; display: flex; flex-direction: column; justify-content: flex-end;">
+                
+                <div style="position: relative; z-index: 5; padding: 0 20px;">
+                    <p class="subtitulo animar" style="margin-top: 20px;">ESPERAMOS CONTAR CON SU PRESENCIA</p>
+                    <p class="cursiva animar" style="font-size: 3.5rem; margin: 0; letter-spacing: 0; color: var(--coral-hibisco);">Mahalo</p>
+                    
+                    <div class="linea animar" style="margin-top: 30px;"></div>
+                    
+                    <p class="animar" style="font-family: 'Cormorant Garamond'; font-size: 1.15rem; font-style: italic; margin-top: 30px; line-height: 1.6;">"Las aguas de los muchos mares no pueden apagar el amor, ni los ríos pueden ahogarlo."<br><span style="font-size: 0.9rem; font-weight: bold; font-style: normal; display: inline-block; margin-top: 10px;">Cantares 8:7</span></p>
+                    
+                    <!-- FOTO CIERRE ATARDECER -->
+                    <img src="https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=600&q=80" alt="Novios atardecer" class="foto-normal animar foto-final" style="margin-top: 40px;">
+                </div>
+
+                <!-- EL RÍO DONDE SE ACUMULAN LAS HOJAS -->
+                <div class="rio-contenedor">
+                    <!-- Hojas y pétalos flotando en la corriente -->
+                    <div class="hoja-cae hf-1 hoja-flotando"></div>
+                    <div class="hoja-cae petalo hf-2 hoja-flotando"></div>
+                    <div class="hoja-cae hf-3 hoja-flotando"></div>
+                    <div class="hoja-cae petalo hf-4 hoja-flotando"></div>
+                    <div class="hoja-cae hf-5 hoja-flotando"></div>
+                </div>
+                
+                <svg class="adorno-tropical adorno-bottom" style="bottom: 20px; z-index: 5;"><use href="#ornamento-tropical"></use></svg>
+            </section>
+
+        </div> 
+    </div> 
+
+    <script>
+        // LECTURA DINÁMICA DE PARÁMETROS URL
+        const param = new URLSearchParams(window.location.search);
+        
+        const inv = param.get('n');
+        if (inv) document.getElementById('nombre-invitado').innerText = inv;
+
+        const pases = param.get('p');
+        if (pases) {
+            document.getElementById('numero-pases').innerText = pases;
+            if (pases === "1") {
+                document.getElementById('texto-pases').innerText = "Lugar en su honor";
+            } else {
+                document.getElementById('texto-pases').innerText = "Lugares en su honor";
+            }
+        }
+
+        // CONTROL DE ANIMACIÓN DEL SOBRE Y AUDIO
+        const audio = document.getElementById('musica-boda');
+        let sobreYaAbierto = false; 
+
+        function abrirInvitacion() {
+            if (sobreYaAbierto) return;
+            sobreYaAbierto = true;
+
+            document.getElementById('btn-abrir').classList.add('abriendo');
+            audio.play().catch(e => console.log("Usuario debe dar play manualmente"));
+            
+            setTimeout(() => {
+                document.getElementById('pantalla-sobre').classList.add('sobre-abierto');
+            }, 800);
+        }
+        
+        document.getElementById('btn-abrir').addEventListener('click', abrirInvitacion);
+
+        const btnMusica = document.getElementById('btn-musica');
+        const iconoMusica = document.getElementById('icono-musica');
+        let sonando = false;
+
+        btnMusica.addEventListener('click', () => {
+            if(sonando) {
+                audio.pause();
+                iconoMusica.classList.remove('fa-pause');
+                iconoMusica.classList.add('fa-play');
+                sonando = false;
+            } else {
+                audio.play();
+                iconoMusica.classList.remove('fa-play');
+                iconoMusica.classList.add('fa-pause');
+                sonando = true;
+            }
+        });
+
+        // INTERSECTION OBSERVER (Animación al hacer scroll)
+        const scrollDiv = document.getElementById('contenido-invitacion');
+        const obs = new IntersectionObserver((entradas) => {
+            entradas.forEach(ent => {
+                if (ent.isIntersecting) ent.target.classList.add('visible');
+            });
+        }, { root: scrollDiv, threshold: 0.1 });
+        document.querySelectorAll('.animar').forEach(el => obs.observe(el));
+
+        // CONTADOR DE TIEMPO
+        const fecha = new Date("Jan 24, 2026 16:00:00").getTime();
+        setInterval(() => {
+            const hoy = new Date().getTime();
+            const d = fecha - hoy;
+            if(d < 0) return;
+            document.getElementById("dias").innerText = Math.floor(d / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
+            document.getElementById("horas").innerText = Math.floor((d % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+            document.getElementById("minutos").innerText = Math.floor((d % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+            document.getElementById("segundos").innerText = Math.floor((d % (1000 * 60)) / 1000).toString().padStart(2, '0');
+        }, 1000);
+
+        // ============================================
+        // CONFIGURACIÓN DE SCROLL LENTO Y LUJOSO (LENIS)
+        // ============================================
+        const lenis = new Lenis({
+            wrapper: document.getElementById('contenido-invitacion'),
+            content: document.getElementById('contenido-invitacion'),
+            lerp: 0.05,             
+            wheelMultiplier: 0.6,   
+            smoothWheel: true,      
+            smoothTouch: true,      
+            touchMultiplier: 1.5,   
+        });
+
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+
+    </script>
+</body>
+</html>
