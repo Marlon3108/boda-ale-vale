@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nuestra Boda | Alejandro & Valeria</title>
+    <title>Nuestra Boda | Mariano & Luzdary</title>
     
     <!-- FAVICON (Flor de Hibisco) -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌺</text></svg>">
@@ -140,7 +140,13 @@
         /* CONTADOR */
         .contador-grid { display: flex; gap: 10px; justify-content: center; margin-top: 15px; z-index: 2; position: relative;}
         .caja-tiempo { background: var(--arena-clara); padding: 12px 10px; border-radius: 8px; width: 70px; border: 1px solid rgba(42, 89, 52, 0.2); }
-        .caja-tiempo span { font-size: 1.8rem; font-family: 'Cormorant Garamond'; color: var(--verde-palmera); display: block;}
+        .caja-tiempo span { 
+            font-size: 1.8rem; 
+            font-family: 'Cormorant Garamond'; 
+            color: var(--verde-palmera); 
+            display: block;
+            font-variant-numeric: lining-nums; /* Esto fuerza a que los números se alineen parejos */
+        }
         .caja-tiempo p { font-size: 0.6rem; text-transform: uppercase; margin: 0; color: #777; letter-spacing: 1px;}
 
         /* ICONOS Y MISCELÁNEOS */
@@ -293,17 +299,21 @@
             <svg class="adorno-tropical adorno-bottom" style="top: 65px; position: relative; margin-bottom: -40px;"><use href="#ornamento-tropical"></use></svg>
 
             <p class="subtitulo" style="position: relative; z-index: 2; margin-top: 100px;">Nuestra Boda</p>
-            <h1 class="cursiva" style="position: relative; z-index: 2; margin-top: 20px; font-size: 4.5rem;">Alejandro<br><span style="font-size: 2.5rem; color: var(--coral-hibisco);">&</span><br>Valeria</h1>
+            <h1 class="cursiva" style="position: relative; z-index: 2; margin-top: 20px; font-size: 4.5rem;">Mariano<br><span style="font-size: 2.5rem; color: var(--coral-hibisco);">&</span><br>Luzdary</h1>
             
-            <p style="font-size: 1.1rem; font-family: 'Cormorant Garamond'; margin-top: 20px;">Invitación para:</p>
-            <h2 id="nombre-invitado" style="font-size: 1.8rem; margin-bottom: 5px; color: var(--texto);">Nuestros Invitados</h2>
+                        <!-- CONTENEDOR DE NOMBRE (Oculto por defecto) -->
+            <div id="caja-nombre" style="display: none; margin-top: 20px;">
+                <p style="font-size: 1.1rem; font-family: 'Cormorant Garamond';">Invitación para:</p>
+                <h2 id="nombre-invitado" style="font-size: 1.8rem; margin-bottom: 5px; color: var(--texto);"></h2>
+            </div>
             
-            <p style="margin-bottom: 10px; font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; letter-spacing: 3px; font-weight: 600; color: var(--verde-palmera);">24 . 01 . 2026</p>
+            <!-- FECHA REPOSICIONADA (Para que se vea bien si no hay nombre) -->
+            <p style="margin-top: 20px; margin-bottom: 10px; font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; letter-spacing: 3px; font-weight: 600; color: var(--verde-palmera);">11 . 04 . 2026</p>
 
             <div class="sobre-icono" id="btn-abrir">
                 <div class="sobre-base"></div>
                 <div class="sobre-tapa"></div>
-                <div class="sobre-sello">A&V</div>
+                <div class="sobre-sello">M&L</div>
             </div>
             
             <div id="btn-flecha" style="cursor: pointer; z-index: 2; position: relative; margin-top: 5px;" onclick="abrirInvitacion()">
@@ -311,11 +321,15 @@
                 <p style="font-size: 0.8rem; color: var(--verde-palmera); text-transform: uppercase; margin-top:5px; letter-spacing: 2px;">Clic para abrir</p>
             </div>
             
-            <div style="margin-top: 25px; margin-bottom: 40px; border-top: 1.5px solid var(--dorado-sol); padding-top: 15px; width: 80%;">
+            <!-- CONTENEDOR DE PASES (Oculto por defecto) -->
+            <div id="caja-pases" style="display: none; margin-top: 25px; margin-bottom: 40px; border-top: 1.5px solid var(--dorado-sol); padding-top: 15px; width: 80%;">
                 <p style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px;">Hemos reservado</p>
-                <h1 id="numero-pases" style="font-size: 2.8rem; margin: 5px 0;">2</h1>
+                <h1 id="numero-pases" style="font-size: 2.8rem; margin: 5px 0;"></h1>
                 <p id="texto-pases" style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px;">Lugares en su honor</p>
             </div>
+            
+            <!-- ESPACIADOR (Para que el sobre no quede muy pegado abajo cuando no hay pases) -->
+            <div id="espaciador-inferior" style="height: 40px;"></div>
         </div>
 
         <!-- CONTENIDO DE LA INVITACIÓN -->
@@ -324,8 +338,8 @@
             <!-- PORTADA -->
             <section style="padding-top: 100px;">
                 <svg class="adorno-tropical adorno-top"><use href="#ornamento-tropical"></use></svg>
-                <p class="animar" style="font-size: 1.1rem; letter-spacing: 3px; color: var(--verde-palmera); font-weight: bold;">24 . 01 . 2026</p>
-                <div class="iniciales animar" style="margin-top: 40px;">A <span>|</span> V</div>
+                <p class="animar" style="font-size: 1.1rem; letter-spacing: 3px; color: var(--verde-palmera); font-weight: bold;">11 . 04 . 2026</p>
+                <div class="iniciales animar" style="margin-top: 40px;">M <span>|</span> L</div>
                 <h3 class="animar" style="font-size: 1.5rem; letter-spacing: 4px; margin-top: 20px;">NOS CASAMOS</h3>
                 <p class="animar" style="font-size: 1rem; font-style: italic; margin-top: 10px;">"El paraíso es estar juntos"</p>
                 
@@ -346,10 +360,10 @@
             <!-- FECHA Y CONTADOR -->
             <section style="padding-top: 0;">
                 <div class="tarjeta animar">
-                    <p class="subtitulo">Enero</p>
+                    <p class="subtitulo">Abril</p>
                     <div class="fecha-grid">
                         <div style="text-align: right; border-top: 1px solid var(--dorado-sol); border-bottom: 1px solid var(--dorado-sol); padding: 10px 0;">Sábado</div>
-                        <div class="fecha-dia">24</div>
+                        <div class="fecha-dia">11</div>
                         <div style="text-align: left; border-top: 1px solid var(--dorado-sol); border-bottom: 1px solid var(--dorado-sol); padding: 10px 0;">2026</div>
                     </div>
                     <p style="margin-top: 30px; font-family: 'Cormorant Garamond'; font-size: 1.2rem; position: relative; z-index: 2; letter-spacing: 2px; text-transform: uppercase; color: var(--coral-hibisco);">Faltan:</p>
@@ -374,19 +388,11 @@
                     <svg class="icono-svg"><use href="#icono-argollas"></use></svg>
                     
                     <p style="font-weight: bold; font-family: 'Cormorant Garamond'; font-size: 1.3rem; position: relative; z-index: 2; letter-spacing: 1px;">16:00 HRS</p>
-                    <p class="subtitulo" style="margin-top: 15px; position: relative; z-index: 2;">CEREMONIA FRENTE AL MAR</p>
-                    <p style="position: relative; z-index: 2; font-size: 1.1rem; margin-top: 5px;">Playa Macarena</p>
-                    <p style="font-size: 0.85rem; color: #888; position: relative; z-index: 2;">Zona Hotelera</p>
-                    <a href="#" class="boton" style="background: transparent; color: var(--coral-hibisco); border: 1px solid var(--coral-hibisco);">Ver Ubicación</a>
-                </div>
-
-                <div class="tarjeta animar" style="padding: 40px 20px;">
-                    <i class="fa-solid fa-martini-glass-citrus icono-grande"></i>
-                    <p style="font-weight: bold; font-family: 'Cormorant Garamond'; font-size: 1.3rem; position: relative; z-index: 2; letter-spacing: 1px;">18:00 HRS</p>
-                    <p class="subtitulo" style="margin-top: 15px; position: relative; z-index: 2;">RECEPCIÓN TROPICAL</p>
-                    <p style="position: relative; z-index: 2; font-size: 1.1rem; margin-top: 5px;">Resort Urobo</p>
-                    <p style="font-size: 0.85rem; color: #888; position: relative; z-index: 2;">Terraza Principal</p>
-                    <a href="#" class="boton" style="background: transparent; color: var(--coral-hibisco); border: 1px solid var(--coral-hibisco);">Ver Ubicación</a>
+                    <p class="subtitulo" style="margin-top: 15px; position: relative; z-index: 2;">CEREMONIA Y RECEPCIÓN</p>
+                    <p style="position: relative; z-index: 2; font-size: 1.1rem; margin-top: 5px;">Gardenview Estate</p>
+                    <p style="font-size: 0.85rem; color: #888; position: relative; z-index: 2;">6255 Gardenview ct<br>Orlando, FL 32822</p>
+                    <!-- Enlace directo a Google Maps con la dirección codificada -->
+                    <a href="https://www.google.com/maps/search/?api=1&query=6255+Gardenview+ct,+Orlando,+FL+32822" target="_blank" class="boton" style="background: transparent; color: var(--coral-hibisco); border: 1px solid var(--coral-hibisco);">Abrir en Maps</a>
                 </div>
             </section>
 
@@ -406,7 +412,7 @@
 
             <section style="padding: 0 20px;">
                 <!-- FOTO VIBRAS TROPICALES -->
-                <img src="https://images.unsplash.com/photo-1596813362035-37cb2f43ce55?auto=format&fit=crop&w=600&q=80" alt="Vibras Tropicales" class="foto-normal animar">
+                <img src="https://plus.unsplash.com/premium_photo-1676225681338-3430efad0d68?q=80&w=869&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Vibras Tropicales" class="foto-normal animar">
             </section>
 
             <!-- DRESS CODE TROPICAL -->
@@ -471,7 +477,7 @@
                 
                 <div style="position: relative; z-index: 5; padding: 0 20px;">
                     <p class="subtitulo animar" style="margin-top: 20px;">ESPERAMOS CONTAR CON SU PRESENCIA</p>
-                    <p class="cursiva animar" style="font-size: 3.5rem; margin: 0; letter-spacing: 0; color: var(--coral-hibisco);">Mahalo</p>
+                    <p class="cursiva animar" style="font-size: 3.5rem; margin: 0; letter-spacing: 0; color: var(--coral-hibisco);">Muchas Gracias</p>
                     
                     <div class="linea animar" style="margin-top: 30px;"></div>
                     
@@ -501,12 +507,20 @@
         // LECTURA DINÁMICA DE PARÁMETROS URL
         const param = new URLSearchParams(window.location.search);
         
+        // Control del Nombre
         const inv = param.get('n');
-        if (inv) document.getElementById('nombre-invitado').innerText = inv;
+        if (inv) {
+            document.getElementById('nombre-invitado').innerText = inv;
+            document.getElementById('caja-nombre').style.display = 'block';
+        }
 
+        // Control de los Pases
         const pases = param.get('p');
         if (pases) {
             document.getElementById('numero-pases').innerText = pases;
+            document.getElementById('caja-pases').style.display = 'block';
+            document.getElementById('espaciador-inferior').style.display = 'none'; // Quitamos el espacio extra
+            
             if (pases === "1") {
                 document.getElementById('texto-pases').innerText = "Lugar en su honor";
             } else {
@@ -560,7 +574,7 @@
         document.querySelectorAll('.animar').forEach(el => obs.observe(el));
 
         // CONTADOR DE TIEMPO
-        const fecha = new Date("Jan 24, 2026 16:00:00").getTime();
+        const fecha = new Date("Apr 11, 2026 16:00:00").getTime();
         setInterval(() => {
             const hoy = new Date().getTime();
             const d = fecha - hoy;
