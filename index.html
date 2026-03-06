@@ -72,9 +72,9 @@
         #pantalla-sobre {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background-color: var(--arena-clara); z-index: 100;
-            display: flex; flex-direction: column; align-items: center; justify-content: flex-start; 
+            display: flex; flex-direction: column; align-items: center; 
             transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1);
-            text-align: center; padding: 20px; overflow-y: auto; overflow-x: hidden;
+            text-align: center; padding: 30px 20px; overflow-y: auto; overflow-x: hidden;
         }
         
         /* EL SOBRE CON EFECTO 3D */
@@ -276,7 +276,7 @@
     </svg>
 
     <audio id="musica-boda" loop>
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+        <source src="https://archivos-invitaciones.s3.amazonaws.com/always-remember-us-this-way-lady-gaga.mp3" type="audio/mpeg">
     </audio>
 
     <div class="app-container">
@@ -294,41 +294,43 @@
         
         <!-- PANTALLA 1: SOBRE DE INICIO -->
         <div id="pantalla-sobre">
-            <!-- Solo dejamos un adorno limpio arriba -->
-            <svg class="adorno-tropical adorno-top" style="top: 20px; position: relative; margin-bottom: 20px;"><use href="#ornamento-tropical"></use></svg>
+            <!-- Contenedor interno para agrupar y centrar verticalmente en PC -->
+            <div style="width: 100%; margin: auto 0; display: flex; flex-direction: column; align-items: center;">
+                
+                <!-- Adorno centrado (usamos display block y margin auto) -->
+                <svg style="display: block; margin: 0 auto; width: 280px; height: 55px; fill: currentColor;"><use href="#ornamento-tropical"></use></svg>
 
-            <p class="subtitulo" style="position: relative; z-index: 2; margin-top: 20px;">Nuestra Boda</p>
-            <h1 class="cursiva" style="position: relative; z-index: 2; margin-top: 20px; font-size: 4.5rem;">Mariano<br><span style="font-size: 2.5rem; color: var(--coral-hibisco);">&</span><br>Luzdary</h1>
-            
-                        <!-- CONTENEDOR DE NOMBRE (Oculto por defecto) -->
-            <div id="caja-nombre" style="display: none; margin-top: 20px;">
-                <p style="font-size: 1.1rem; font-family: 'Cormorant Garamond';">Invitación para:</p>
-                <h2 id="nombre-invitado" style="font-size: 1.8rem; margin-bottom: 5px; color: var(--texto);"></h2>
-            </div>
-            
-            <!-- FECHA REPOSICIONADA (Para que se vea bien si no hay nombre) -->
-            <p style="margin-top: 20px; margin-bottom: 10px; font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; letter-spacing: 3px; font-weight: 600; color: var(--verde-palmera);">11 . 04 . 2026</p>
+                <p class="subtitulo" style="margin-top: 35px; margin-bottom: 25px;">Nuestra Boda</p>
+                
+                <h1 class="cursiva" style="font-size: 3.8rem; margin: 0; line-height: 1.1;">Mariano<br><span style="font-size: 2.2rem; color: var(--coral-hibisco);">&</span><br>Luzdary</h1>
+                
+                <!-- CONTENEDOR DE NOMBRE (Oculto por defecto) -->
+                <div id="caja-nombre" style="display: none; margin-top: 20px;">
+                    <p style="font-size: 1.1rem; font-family: 'Cormorant Garamond';">Invitación para:</p>
+                    <h2 id="nombre-invitado" style="font-size: 1.6rem; margin-bottom: 5px; color: var(--texto);"></h2>
+                </div>
+                
+                <!-- FECHA -->
+                <p style="margin-top: 25px; margin-bottom: 25px; font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; letter-spacing: 3px; font-weight: 600; color: var(--verde-palmera);">11 . 04 . 2026</p>
 
-            <div class="sobre-icono" id="btn-abrir">
-                <div class="sobre-base"></div>
-                <div class="sobre-tapa"></div>
-                <div class="sobre-sello">M&L</div>
+                <div class="sobre-icono" id="btn-abrir">
+                    <div class="sobre-base"></div>
+                    <div class="sobre-tapa"></div>
+                    <div class="sobre-sello">M&L</div>
+                </div>
+                
+                <div id="btn-flecha" style="cursor: pointer; z-index: 2; position: relative; margin-top: 10px;" onclick="abrirInvitacion()">
+                    <i class="fa-solid fa-angle-up sobre-flecha"></i>
+                    <p style="font-size: 0.8rem; color: var(--verde-palmera); text-transform: uppercase; margin-top:5px; letter-spacing: 2px;">Clic para abrir</p>
+                </div>
+                
+                <!-- CONTENEDOR DE PASES (Oculto por defecto) -->
+                <div id="caja-pases" style="display: none; margin-top: 25px; margin-bottom: 10px; border-top: 1.5px solid var(--dorado-sol); padding-top: 15px; width: 80%;">
+                    <p style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px;">Hemos reservado</p>
+                    <h1 id="numero-pases" style="font-size: 2.8rem; margin: 5px 0;"></h1>
+                    <p id="texto-pases" style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px;">Lugares en su honor</p>
+                </div>
             </div>
-            
-            <div id="btn-flecha" style="cursor: pointer; z-index: 2; position: relative; margin-top: 5px;" onclick="abrirInvitacion()">
-                <i class="fa-solid fa-angle-up sobre-flecha"></i>
-                <p style="font-size: 0.8rem; color: var(--verde-palmera); text-transform: uppercase; margin-top:5px; letter-spacing: 2px;">Clic para abrir</p>
-            </div>
-            
-            <!-- CONTENEDOR DE PASES (Oculto por defecto) -->
-            <div id="caja-pases" style="display: none; margin-top: 25px; margin-bottom: 40px; border-top: 1.5px solid var(--dorado-sol); padding-top: 15px; width: 80%;">
-                <p style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px;">Hemos reservado</p>
-                <h1 id="numero-pases" style="font-size: 2.8rem; margin: 5px 0;"></h1>
-                <p id="texto-pases" style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px;">Lugares en su honor</p>
-            </div>
-            
-            <!-- ESPACIADOR (Para que el sobre no quede muy pegado abajo cuando no hay pases) -->
-            <div id="espaciador-inferior" style="height: 40px;"></div>
         </div>
 
         <!-- CONTENIDO DE LA INVITACIÓN -->
@@ -343,14 +345,14 @@
                 <p class="animar" style="font-size: 1rem; font-style: italic; margin-top: 10px;">"El paraíso es estar juntos"</p>
                 
                 <!-- FOTO PAREJA PLAYA -->
-                <img src="img/atardecer.jpg" alt="Novios atardecer" class="foto-normal animar foto-final" style="margin-top: 40px;" loading="lazy">
+                <img src="img/novios.jpg" alt="Novios Playa" class="foto-arco animar" loading="eager">
             </section>
 
             <!-- HISTORIA Y MÚSICA -->
             <section style="padding-top: 0;">
                 <div class="tarjeta animar">
                     <svg class="adorno-tropical adorno-top"><use href="#ornamento-tropical"></use></svg>
-                    <button class="reproductor" id="btn-musica"><i class="fa-solid fa-play" id="icono-musica"></i> Dale play a nuestra canción</button>
+                    <button class="reproductor" id="btn-musica"><i class="fa-solid fa-play" id="icono-musica"></i> Nuestra Canción</button>
                     <p style="margin-top: 35px; font-weight: bold; font-family: 'Cormorant Garamond'; font-size: 1.3rem; position: relative; z-index: 2; color: var(--verde-palmera);">Nuestra aventura continúa...</p>
                     <p style="font-size: 0.95rem; line-height: 1.8; margin-top: 15px; position: relative; z-index: 2;">Frente al mar, con el amor que nos une y la bendición de Dios, uniremos nuestras vidas. Queremos que seas parte de este hermoso capítulo.</p>
                 </div>
@@ -374,11 +376,6 @@
                     </div>
                     <svg class="adorno-tropical adorno-bottom"><use href="#ornamento-tropical"></use></svg>
                 </div>
-            </section>
-
-            <section style="padding: 0 20px;">
-                <!-- FOTO DETALLE TROPICAL -->
-                <img src="img/novios.jpg" alt="Novios Playa" class="foto-arco animar" loading="eager">
             </section>
 
             <!-- UBICACIONES -->
@@ -518,7 +515,6 @@
         if (pases) {
             document.getElementById('numero-pases').innerText = pases;
             document.getElementById('caja-pases').style.display = 'block';
-            document.getElementById('espaciador-inferior').style.display = 'none'; // Quitamos el espacio extra
             
             if (pases === "1") {
                 document.getElementById('texto-pases').innerText = "Lugar en su honor";
@@ -536,13 +532,25 @@
             sobreYaAbierto = true;
 
             document.getElementById('btn-abrir').classList.add('abriendo');
-            // Quitamos la reproducción automática para evitar errores en móviles
+            
+            // Intentamos reproducir el audio de forma segura tras el clic
+            let promesaAudio = audio.play();
+            if (promesaAudio !== undefined) {
+                promesaAudio.then(_ => {
+                    // El audio empezó a sonar, actualizamos el botón de pausa abajo
+                    sonando = true;
+                    iconoMusica.classList.remove('fa-play');
+                    iconoMusica.classList.add('fa-pause');
+                }).catch(error => {
+                    // Si el navegador lo bloquea, no pasa nada, el usuario le dará play abajo
+                    console.log("Autoplay bloqueado, el usuario debe dar play manualmente.");
+                });
+            }
             
             setTimeout(() => {
                 document.getElementById('pantalla-sobre').classList.add('sobre-abierto');
             }, 800);
         }
-        
         document.getElementById('btn-abrir').addEventListener('click', abrirInvitacion);
 
         const btnMusica = document.getElementById('btn-musica');
