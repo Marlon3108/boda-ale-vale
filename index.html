@@ -209,6 +209,55 @@
         /* Modificamos la foto final para que el río quede debajo y no la tape */
         .foto-final { position: relative; z-index: 5; margin-bottom: 80px;}
 
+        /* =========================================
+        BOTÓN FLOTANTE DE MÚSICA (Círculo elegante)
+        ========================================= */
+        #btn-musica-flotante {
+            position: fixed;
+            bottom: 30px;
+            right: 30px; /* Puedes cambiar a 'left: 30px;' si prefieres ese lado */
+            width: 50px;
+            height: 50px;
+            background-color: var(--verde-palmera);
+            color: var(--blanco);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            cursor: pointer;
+            z-index: 1000;
+            opacity: 0; /* Oculto inicialmente */
+            transform: scale(0.5);
+            pointer-events: none; /* Desactivado inicialmente */
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 2px solid var(--dorado-sol);
+        }
+
+        /* Clase para cuando el sobre se abre y el botón debe aparecer */
+        #btn-musica-flotante.activo {
+            opacity: 1;
+            transform: scale(1);
+            pointer-events: auto;
+        }
+
+        #btn-musica-flotante i {
+            font-size: 1.2rem;
+        }
+
+        /* Pequeña animación de latido cuando la música suena */
+        @keyframes latido-musica {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(212, 175, 55, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
+        }
+
+        #btn-musica-flotante.sonando {
+            animation: latido-musica 2s infinite;
+            background-color: var(--coral-hibisco); /* Cambia de color cuando está activo */
+            border-color: var(--blanco);
+        }
+
     </style>
 </head>
 <body>
@@ -276,7 +325,7 @@
     </svg>
 
     <audio id="musica-boda" loop>
-        <source src="https://archivos-invitaciones.s3.amazonaws.com/always-remember-us-this-way-lady-gaga.mp3" type="audio/mpeg">
+        <source src="cancion.mp3" type="audio/mpeg">
     </audio>
 
     <div class="app-container">
@@ -457,7 +506,7 @@
                 </div>
 
                 <div class="tarjeta animar" style="padding: 70px 20px 95px 20px;">
-                    <i class="fa-regular fa-calendar-check icono-grande" style="position: relative; margin-top: 10px;"><i class="fa-solid fa-heart" style="position: absolute; font-size: 1.2rem; color: var(--coral-hibisco); bottom: 0; right: -5px;"></i></i>
+                    <i class="fa-regular fa-calendar-check icono-grande" style="position: relative; margin-top: 10px;"></i>
                     <h3 style="font-size: 1.7rem; position: relative; z-index: 2; margin-top: 10px;">Confirmar Asistencia</h3>
                     <p style="font-size: 0.9rem; margin-top: 15px; position: relative; z-index: 2; line-height: 1.6;">Agradecemos que confirme su asistencia antes del 27 de diciembre.</p>
                     <div style="display: flex; gap: 10px; margin-top: 25px; position: relative; z-index: 2;">
@@ -497,6 +546,10 @@
             </section>
 
         </div> 
+        <!-- BOTÓN FLOTANTE DE MÚSICA -->
+        <div id="btn-musica-flotante">
+            <i class="fa-solid fa-music" id="icono-flotante"></i>
+        </div>
     </div> 
 
     <script>
@@ -523,53 +576,115 @@
             }
         }
 
+        // ============================================
         // CONTROL DE ANIMACIÓN DEL SOBRE Y AUDIO
+        // ============================================
         const audio = document.getElementById('musica-boda');
+        audio.volume = 0.5; // Volumen inicial al 50%
+        
+        // Elementos UI del Audio
+        const btnMusica = document.getElementById('btn-musica');
+        const iconoMusica = document.getElementById('icono-musica');
+        const btnFlotante = document.getElementById('btn-musica-flotante');
+        const iconoFlotante = document.getElementById('icono-flotante');
+        
         let sobreYaAbierto = false; 
+        let sonando = false;
 
+        // Función Maestra para sincronizar los botones
+        function actualizarInterfazAudio(estaSonando) {
+            sonando = estaSonando;
+            
+            if (estaSonando) {
+                // Estado: SONANDO (Muestra íconos de Pausa)
+                iconoMusica.classList.remove('fa-play');
+                iconoMusica.classList.add('fa-pause');
+                
+                iconoFlotante.classList.remove('fa-music', 'fa-play');
+                iconoFlotante.classList.add('fa-pause');
+                btnFlotante.classList.add('sonando');
+            } else {
+                // Estado: PAUSADO (Muestra íconos de Play/Music)
+                iconoMusica.classList.remove('fa-pause');
+                iconoMusica.classList.add('fa-play');
+                
+                iconoFlotante.classList.remove('fa-pause');
+                iconoFlotante.classList.add('fa-music');
+                btnFlotante.classList.remove('sonando');
+            }
+        }
+
+        // Función que ejecuta Play/Pause
+        function toggleMusica() {
+            if (sonando) {
+                audio.pause();
+                actualizarInterfazAudio(false);
+            } else {
+                let playPromise = audio.play();
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        actualizarInterfazAudio(true);
+                    }).catch(e => {
+                        console.log("No se pudo iniciar el audio:", e);
+                        actualizarInterfazAudio(false);
+                    });
+                }
+            }
+        }
+
+        // Asignar el MISMO evento a ambos botones
+        btnMusica.addEventListener('click', toggleMusica);
+        btnFlotante.addEventListener('click', toggleMusica);
+
+        // ============================================
+        // FUNCIÓN ABRIR INVITACIÓN Y AUTOPLAY
+        // ============================================
         function abrirInvitacion() {
             if (sobreYaAbierto) return;
             sobreYaAbierto = true;
 
             document.getElementById('btn-abrir').classList.add('abriendo');
             
-            // Intentamos reproducir el audio de forma segura tras el clic
-            let promesaAudio = audio.play();
-            if (promesaAudio !== undefined) {
-                promesaAudio.then(_ => {
-                    // El audio empezó a sonar, actualizamos el botón de pausa abajo
-                    sonando = true;
-                    iconoMusica.classList.remove('fa-play');
-                    iconoMusica.classList.add('fa-pause');
-                }).catch(error => {
-                    // Si el navegador lo bloquea, no pasa nada, el usuario le dará play abajo
-                    console.log("Autoplay bloqueado, el usuario debe dar play manualmente.");
-                });
-            }
-            
+            // Animación del sobre
             setTimeout(() => {
                 document.getElementById('pantalla-sobre').classList.add('sobre-abierto');
+                
+                // Mostrar el botón flotante
+                setTimeout(() => {
+                    btnFlotante.classList.add('activo');
+                }, 500); 
             }, 800);
+
+            // Intentar Autoplay con Fade-In
+            setTimeout(() => {
+                audio.volume = 0; // Inicia en 0
+                let playPromise = audio.play();
+                
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        actualizarInterfazAudio(true); // Sincroniza UI a modo Sonando
+                        
+                        // Efecto Fade-In al 50%
+                        let vol = 0;
+                        const fadeAudio = setInterval(() => {
+                            if (vol < 0.5) {
+                                vol += 0.05;
+                                audio.volume = Math.min(vol, 0.5);
+                            } else {
+                                clearInterval(fadeAudio);
+                            }
+                        }, 200);
+
+                    }).catch(error => {
+                        console.log("Autoplay bloqueado. El usuario debe dar play.");
+                        actualizarInterfazAudio(false); // Sincroniza UI a modo Pausado
+                        audio.volume = 0.5; // Lo deja al 50% para el clic manual
+                    });
+                }
+            }, 300);
         }
+        
         document.getElementById('btn-abrir').addEventListener('click', abrirInvitacion);
-
-        const btnMusica = document.getElementById('btn-musica');
-        const iconoMusica = document.getElementById('icono-musica');
-        let sonando = false;
-
-        btnMusica.addEventListener('click', () => {
-            if(sonando) {
-                audio.pause();
-                iconoMusica.classList.remove('fa-pause');
-                iconoMusica.classList.add('fa-play');
-                sonando = false;
-            } else {
-                audio.play();
-                iconoMusica.classList.remove('fa-play');
-                iconoMusica.classList.add('fa-pause');
-                sonando = true;
-            }
-        });
 
         // INTERSECTION OBSERVER (Animación al hacer scroll)
         const scrollDiv = document.getElementById('contenido-invitacion');
