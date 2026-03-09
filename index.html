@@ -126,17 +126,6 @@
         .reproductor, .boton { background: var(--verde-palmera); color: white; padding: 12px 25px; border-radius: 30px; text-transform: uppercase; font-size: 0.8rem; border: none; margin-top: 15px; z-index: 2; position: relative; letter-spacing: 1px; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; cursor: pointer; justify-content: center; transition: background 0.3s;}
         .boton:hover { background: var(--coral-hibisco); }
 
-        /* ITINERARIO ZIG-ZAG */
-        .timeline { position: relative; margin: 40px auto; width: 100%; max-width: 400px; padding: 20px 0; }
-        .timeline::after { content: ''; position: absolute; width: 1.5px; background: var(--dorado-sol); top: 0; bottom: 0; left: 50%; margin-left: -0.75px; }
-        .tl-item { position: relative; width: 50%; padding-bottom: 35px; }
-        .tl-item::before { content: ''; position: absolute; top: 0; width: 12px; height: 12px; background: var(--arena-clara); border: 2px solid var(--coral-hibisco); border-radius: 50%; z-index: 1; }
-        .tl-item:nth-child(odd) { left: 0; padding-right: 25px; text-align: right; }
-        .tl-item:nth-child(odd)::before { right: -6px; }
-        .tl-item:nth-child(even) { left: 50%; padding-left: 25px; text-align: left; }
-        .tl-item:nth-child(even)::before { left: -6px; }
-        .tl-hora { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: var(--verde-palmera); font-weight: bold; margin-bottom: 5px;}
-
         /* CONTADOR */
         .contador-grid { display: flex; gap: 10px; justify-content: center; margin-top: 15px; z-index: 2; position: relative;}
         .caja-tiempo { background: var(--arena-clara); padding: 12px 10px; border-radius: 8px; width: 70px; border: 1px solid rgba(42, 89, 52, 0.2); }
@@ -403,7 +392,7 @@
                     <svg class="adorno-tropical adorno-top"><use href="#ornamento-tropical"></use></svg>
                     <button class="reproductor" id="btn-musica"><i class="fa-solid fa-play" id="icono-musica"></i> Nuestra Canción</button>
                     <p style="margin-top: 35px; font-weight: bold; font-family: 'Cormorant Garamond'; font-size: 1.3rem; position: relative; z-index: 2; color: var(--verde-palmera);">Nuestra aventura continúa...</p>
-                    <p style="font-size: 0.95rem; line-height: 1.8; margin-top: 15px; position: relative; z-index: 2;">Frente al mar, con el amor que nos une y la bendición de Dios, uniremos nuestras vidas. Queremos que seas parte de este hermoso capítulo.</p>
+                    <p style="font-size: 0.95rem; line-height: 1.8; margin-top: 15px; position: relative; z-index: 2;">Con el amor que nos une y la bendición de Dios, uniremos nuestras vidas. Queremos que seas parte de este hermoso capítulo.</p>
                 </div>
             </section>
 
@@ -427,31 +416,24 @@
                 </div>
             </section>
 
-            <!-- UBICACIONES -->
+            <!-- DÓNDE Y CUÁNDO (Reemplaza Ubicaciones e Itinerario) -->
             <section>
-                <div class="tarjeta animar" style="padding: 40px 20px;">
-                    <svg class="icono-svg"><use href="#icono-argollas"></use></svg>
+                <div class="tarjeta animar" style="padding: 50px 20px;">
+                    <!-- Ícono de anillos -->
+                    <svg class="icono-svg" style="margin-bottom: 5px;"><use href="#icono-argollas"></use></svg>
                     
-                    <p style="font-weight: bold; font-family: 'Cormorant Garamond'; font-size: 1.3rem; position: relative; z-index: 2; letter-spacing: 1px;">16:00 HRS</p>
                     <p class="subtitulo" style="margin-top: 15px; position: relative; z-index: 2;">CEREMONIA Y RECEPCIÓN</p>
-                    <p style="position: relative; z-index: 2; font-size: 1.1rem; margin-top: 5px;">Gardenview Estate</p>
-                    <p style="font-size: 0.85rem; color: #888; position: relative; z-index: 2;">6255 Gardenview ct<br>Orlando, FL 32822</p>
-                    <!-- Enlace directo a Google Maps con la dirección codificada -->
-                    <a href="https://www.google.com/maps/search/?api=1&query=6255+Gardenview+ct,+Orlando,+FL+32822" target="_blank" class="boton" style="background: transparent; color: var(--coral-hibisco); border: 1px solid var(--coral-hibisco);">Abrir en Maps</a>
-                </div>
-            </section>
-
-            <!-- ITINERARIO -->
-            <section style="padding-top: 0;">
-                <h2 class="animar" style="text-align: center; font-size: 1.8rem; letter-spacing: 1px;">Itinerario</h2>
-                <div class="linea animar"></div>
-                <div class="timeline animar">
-                    <div class="tl-item"><div class="tl-hora">16:00 Hrs</div><p style="font-size: 0.95rem;">Ceremonia de Arena</p></div>
-                    <div class="tl-item"><div class="tl-hora">17:00 Hrs</div><p style="font-size: 0.95rem;">Cóctel & Margaritas</p></div>
-                    <div class="tl-item"><div class="tl-hora">18:00 Hrs</div><p style="font-size: 0.95rem;">Ingreso de esposos</p></div>
-                    <div class="tl-item"><div class="tl-hora">18:30 Hrs</div><p style="font-size: 0.95rem;">Primer Baile</p></div>
-                    <div class="tl-item"><div class="tl-hora">19:30 Hrs</div><p style="font-size: 0.95rem;">Cena bajo las estrellas</p></div>
-                    <div class="tl-item"><div class="tl-hora">21:00 Hrs</div><p style="font-size: 0.95rem;">¡Fiesta Hawaiana!</p></div>
+                    
+                    <!-- Hora destacada -->
+                    <h2 style="font-size: 2.5rem; color: var(--coral-hibisco); margin: 15px 0; letter-spacing: 2px; position: relative; z-index: 2;">4:00 PM</h2>
+                    
+                    <div class="linea" style="margin: 20px auto; width: 40px;"></div>
+                    
+                    <p style="font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 600; color: var(--verde-palmera); position: relative; z-index: 2; margin-top: 15px;">Gardenview Estate</p>
+                    <p style="font-size: 0.9rem; line-height: 1.6; margin-top: 15px; position: relative; z-index: 2;">Acompáñanos a dar el "Sí, acepto" y celebremos juntos con cena, bebidas y una fiesta inolvidable.</p>
+                    
+                    <!-- Botón de Maps más elegante -->
+                    <a href="https://www.google.com/maps/search/?api=1&query=6255+Gardenview+ct,+Orlando,+FL+32822" target="_blank" class="boton" style="margin-top: 25px; padding: 12px 30px; background: transparent; color: var(--verde-palmera); border: 1px solid var(--verde-palmera);"><i class="fa-solid fa-location-dot"></i> Ver en Google Maps</a>
                 </div>
             </section>
 
@@ -471,7 +453,7 @@
                         <svg class="icono-ropa"><use href="#icono-vestido-playa"></use></svg>
                     </div>
 
-                    <p style="font-size: 0.9rem; line-height: 1.6;">Se sugiere el uso de guayaberas, prendas de lino y vestidos vaporosos. Con mucho cariño les pedimos evitar prendas en color blanco.</p>
+                    <p style="font-size: 0.9rem; line-height: 1.6;">Se sugiere el uso de guayaberas, prendas de lino y vestidos vaporosos. Nuestra tematica será Hawaiana.</p>
                 </div>
             </section>
 
@@ -480,13 +462,13 @@
                 <div class="tarjeta animar" style="padding: 50px 20px 95px 20px;">
                     <i class="fa-solid fa-moon icono-grande" style="font-size: 2rem; color: var(--dorado-sol);"></i>
                     
-                    <h3 style="font-size: 1.6rem; margin-bottom: 10px; margin-top: 10px; position: relative; z-index: 2;">Sin Niños</h3>
-                    <p style="font-size: 0.9rem; line-height: 1.7; position: relative; z-index: 2;">Queremos que disfrutes de una noche relajada y llena de brisa marina. Por ello, nuestra boda será un evento solo para adultos.</p>
+                    <h3 style="font-size: 1.6rem; margin-bottom: 10px; margin-top: 10px; position: relative; z-index: 2;">Noche Especial</h3>
+                    <p style="font-size: 0.9rem; line-height: 1.7; position: relative; z-index: 2;">Queremos que disfrutes de una noche relajada y especial.</p>
                     
                     <div class="linea" style="margin: 25px auto;"></div>
                     
                     <h3 style="font-size: 1.6rem; margin-bottom: 10px; position: relative; z-index: 2;">Nota Especial</h3>
-                    <p style="font-size: 0.9rem; line-height: 1.7; position: relative; z-index: 2;">Agradecemos tu puntualidad para que no te pierdas el hermoso atardecer con nosotros.</p>
+                    <p style="font-size: 0.9rem; line-height: 1.7; position: relative; z-index: 2;">Agradecemos tu puntualidad para que no te pierdas de nada.</p>
                     
                     <svg class="adorno-tropical adorno-bottom"><use href="#ornamento-tropical"></use></svg>
                 </div>
@@ -496,23 +478,16 @@
             <section style="padding-top: 0;">
                 <div class="tarjeta animar">
                     <svg class="adorno-tropical adorno-top"><use href="#ornamento-tropical"></use></svg>
-                    <i class="fa-solid fa-gift icono-grande" style="margin-top: 10px;"></i>
+                    <i class="fa-solid fa-gift icono-grande" style="margin-top: 30px;"></i>
                     <p class="subtitulo">Sugerencia de Regalos</p>
                     <p style="font-size: 0.9rem; margin-top: 15px; position: relative; z-index: 2; line-height: 1.6;">El mejor regalo es que compartas este paraíso con nosotros, pero si deseas tener un detalle, les dejamos esta opción:</p>
                     <p style="font-family: 'Cormorant Garamond'; font-size: 1.5rem; margin-top: 25px; font-weight: bold; color: var(--verde-palmera); position: relative; z-index: 2;">Lluvia de Sobres</p>
                     <i class="fa-regular fa-envelope" style="font-size: 2.2rem; color: var(--dorado-sol); margin: 15px 0; position: relative; z-index: 2;"></i>
-                    <p style="font-size: 0.85rem; margin-top: 15px; font-weight: bold; position: relative; z-index: 2; letter-spacing: 2px;">TRANSFERENCIA</p>
-                    <p style="font-size: 0.9rem; position: relative; z-index: 2; margin-top: 5px;">Cuenta: XXXXXXXX</p>
                 </div>
 
                 <div class="tarjeta animar" style="padding: 70px 20px 95px 20px;">
                     <i class="fa-regular fa-calendar-check icono-grande" style="position: relative; margin-top: 10px;"></i>
                     <h3 style="font-size: 1.7rem; position: relative; z-index: 2; margin-top: 10px;">Confirmar Asistencia</h3>
-                    <p style="font-size: 0.9rem; margin-top: 15px; position: relative; z-index: 2; line-height: 1.6;">Agradecemos que confirme su asistencia antes del 27 de diciembre.</p>
-                    <div style="display: flex; gap: 10px; margin-top: 25px; position: relative; z-index: 2;">
-                        <a href="https://wa.me/num" target="_blank" class="boton" style="font-size: 0.75rem; flex:1;"><i class="fa-brands fa-whatsapp"></i> Novia</a>
-                        <a href="https://wa.me/num" target="_blank" class="boton" style="font-size: 0.75rem; flex:1;"><i class="fa-brands fa-whatsapp"></i> Novio</a>
-                    </div>
                     <svg class="adorno-tropical adorno-bottom"><use href="#ornamento-tropical"></use></svg>
                 </div>
             </section>
@@ -580,7 +555,7 @@
         // CONTROL DE ANIMACIÓN DEL SOBRE Y AUDIO
         // ============================================
         const audio = document.getElementById('musica-boda');
-        audio.volume = 0.5; // Volumen inicial al 50%
+        audio.volume = 0.3; // Volumen inicial al 50%
         
         // Elementos UI del Audio
         const btnMusica = document.getElementById('btn-musica');
