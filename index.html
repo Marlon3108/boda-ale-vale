@@ -671,7 +671,7 @@
         document.querySelectorAll('.animar').forEach(el => obs.observe(el));
 
         // CONTADOR DE TIEMPO
-        const fecha = new Date("Apr 11, 2026 16:00:00").getTime();
+        const fecha = new Date("2026-04-11T16:00:00-04:00").getTime();
         setInterval(() => {
             const hoy = new Date().getTime();
             const d = fecha - hoy;
