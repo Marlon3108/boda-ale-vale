@@ -612,6 +612,29 @@
         btnFlotante.addEventListener('click', toggleMusica);
 
         // ============================================
+        // PAUSAR AUDIO AL SALIR DE LA PESTAÑA O MINIMIZAR
+        // ============================================
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                // Si la pestaña se oculta (cambio de tab, minimizar, bloquear celular)
+                if (sonando) {
+                    audio.pause();
+                    // NO llamamos a actualizarInterfazAudio(false) para no cambiar los botones
+                    // Queremos que los botones sigan mostrando "pausa" para que al volver, la música sepa que debe reanudarse
+                }
+            } else {
+                // Si el usuario regresa a la pestaña
+                if (sonando) {
+                    // Solo reanudamos si estaba sonando antes de irse
+                    let playPromise = audio.play();
+                    if (playPromise !== undefined) {
+                        playPromise.catch(e => console.log("No se pudo reanudar:", e));
+                    }
+                }
+            }
+        });
+
+        // ============================================
         // FUNCIÓN ABRIR INVITACIÓN Y AUTOPLAY
         // ============================================
         function abrirInvitacion() {
